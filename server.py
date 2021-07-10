@@ -1,4 +1,4 @@
-from os import name
+from os import environ
 from flask import Flask,render_template,request,redirect
 #from werkzeug.utils import redirect
 
@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home_page():
-    return render_template('index.html', name='hello welcome to my web app')
+    return render_template('index.html', name=environ['NAME'])
 
 
 def database(data):
