@@ -1,8 +1,10 @@
 from flask import Flask,render_template,request,redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.engine import URL
+import os
 
-connection_string = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=db29.database.windows.net;DATABASE=kadudb;UID=azuredb;PWD=Tallman@2222"
+connection_string = os.environ['SQL_SERVER']
+#connection_string = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=db29.database.windows.net;DATABASE=kadudb;UID=azuredb;PWD=Tallman@2222"
 connection_url = URL.create("mssql+pyodbc", query={"odbc_connect": connection_string})
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = connection_url
@@ -24,7 +26,7 @@ class Customer(db.Model):
 
 @app.route('/')
 def home_page():
-    return render_template('index.html', name='hello welcome to my web app')
+    return render_template('index.html', name=os.environ['NAME'])
 
 @app.route('/profile')
 def info_page():
